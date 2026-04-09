@@ -7,7 +7,7 @@ public class Customer {
     private String email;
     private String number;
     private Job job;
-    private int idC = 10000000;
+    private int idC = 1000000;
     private int id;
 
     public Customer(String _name, String _email, String _number){
@@ -15,6 +15,13 @@ public class Customer {
         this.email = _email;
         this.number = _number;
         this.id = calcId();
+    }
+
+    public Customer(int _id, String _name, String _email, String _number){
+        this.name =_name;
+        this.email = _email;
+        this.number = _number;
+        this.id = _id;
     }
 
     private int calcId(){
@@ -51,5 +58,10 @@ public class Customer {
     }
     public void setJob(Job job){
         this.job = job;
+    }
+
+    public String toString(){
+        String str = Integer.toString(id) +" "+name+" "+" "+email+" "+number;
+        return str;
     }
 }

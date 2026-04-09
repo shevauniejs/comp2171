@@ -6,15 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 public class Gui extends JFrame implements GuiFuncProcessor{
     private JFrame UI = this;
+    private JScrollPane scrollPane;
     private JPanel leftPanel;
     private JPanel rightPanel;
-    private JPanel upperPanel;
-    private JPanel lowerPanel;
     private JPanel mainPanel;
 
     private JButton addCustomer;
@@ -39,17 +39,8 @@ public class Gui extends JFrame implements GuiFuncProcessor{
         
         rightPanel = new JPanel(new GridLayout(2,1,0,10)); //right side shows details and fields
         rightPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
-        rightPanel.setPreferredSize(new Dimension(650,600));
-        rightPanel.setBackground(Color.CYAN);
-
-        
-        upperPanel = new JPanel(); //panel at top
-        upperPanel.setBorder(BorderFactory.createLineBorder(Color.pink));
-        upperPanel.setPreferredSize(new Dimension(650,600));
-
-        lowerPanel = new JPanel(); //panel at bottom
-        lowerPanel.setBorder(BorderFactory.createLineBorder(Color.yellow));
-        lowerPanel.setPreferredSize(new Dimension(650,100));
+        rightPanel.setPreferredSize(new Dimension(650,400));
+        rightPanel.setBackground(Color.gray);
 
         ButtonListener coreListener = new ButtonListener();
         addCustomer = new JButton("ADD Customer");
@@ -74,9 +65,6 @@ public class Gui extends JFrame implements GuiFuncProcessor{
         leftPanel.add(viewJob);
         leftPanel.add(generateReport);
 
-        rightPanel.add(upperPanel);
-        rightPanel.add(lowerPanel);
-
         mainPanel = new JPanel();
         mainPanel.setBackground(Color.GRAY);
 
@@ -96,6 +84,7 @@ public class Gui extends JFrame implements GuiFuncProcessor{
             }
             if(event.getSource()==viewCustomer){
                 System.out.println("View Customer");
+                viewCustomers();
             }  
             if(event.getSource()==viewJob){
                 System.out.println("View Job");
@@ -114,7 +103,12 @@ public class Gui extends JFrame implements GuiFuncProcessor{
     }
 
     public void viewCustomers(){
-
+        String [] theads = {"ID", "Name","Email","Number"};
+        CustomerViewer viewCs = new CustomerViewer(theads);
+        rightPanel.removeAll();
+        scrollPane = new JScrollPane(viewCs.getTable());
+        rightPanel.add(scrollPane);
+        rightPanel.updateUI();
     }
     
     public void addJobToCustomer() {

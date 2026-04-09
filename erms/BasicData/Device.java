@@ -1,5 +1,10 @@
 package BasicData;
+
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Device {
+    private int idC =2000000;
+    private int id;
     private String brand;
     private String model;
     private String description;
@@ -8,8 +13,18 @@ public class Device {
         this.brand = _brand;
         this.model= _model;
         this.description= _descrip;
+        this.id = calcId();
     }
 
+    private int calcId(){
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        int rand = random.nextInt(0+1, 10000);
+        return idC+ rand;
+    }
+
+    public int getId(){
+        return this.id;
+    }
     public String getBrand(){
 	    return brand;
     }

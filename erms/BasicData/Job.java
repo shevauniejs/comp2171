@@ -1,5 +1,10 @@
 package BasicData;
+
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Job{
+    private int idC = 3000000;
+    private int id;
     private Device device;
     private float cost;
     private String location;
@@ -9,6 +14,17 @@ public class Job{
 
     public Job(Device dev){
         this.device = dev;
+        this.id = calcId();
+    }
+
+    private int calcId(){
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        int rand = random.nextInt(0+1, 10000);
+        return idC+ rand;
+    }
+
+    public int getId(){
+        return this.id;
     }
     public Device getDevice(){
 	    return device;

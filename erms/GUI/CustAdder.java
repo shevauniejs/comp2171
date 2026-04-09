@@ -9,13 +9,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import BasicData.CreateCustomer;
 import BasicData.Customer;
 import Data.CustomerRepo;
 import Data.DataMv;
 
-public class CustAdder extends AdderFrame implements DataMv{
+public class CustAdder extends AdderFrame implements DataMv, CreateCustomer{
     private Customer cs;
-    private CustomerRepo csr;
+
     public CustAdder(int n) {
         super(n);
         this.setTitle("Add Customer");
@@ -41,36 +42,26 @@ public class CustAdder extends AdderFrame implements DataMv{
         this.setVisible(true);
     }
 
-    private void createCustomer(){
+    public void createCustomer(){
         String name = txfds.get(0).getText();
         String email  = txfds.get(1).getText();
         String phone = txfds.get(2).getText();
         cs = new Customer(name, email, phone);
-
     }
-    public void storeToDb(){
-        //write data to DB
-        csr = new CustomerRepo();
-        csr.addCustomer(cs);
-        JOptionPane.showMessageDialog(this, "Customer added!");
-    }
-
-    @Override
+    
     public void writer() {
         // write customer to DB
+        CustomerRepo.addCustomer(cs);
+        JOptionPane.showMessageDialog(this, "Customer added!");
+        this.setVisible(false);
     }
-
-    @Override
-    public void loader() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'loader'");
-    }
+    
     private class ButtonListener implements ActionListener{
         public void actionPerformed (ActionEvent event){
             if((event.getSource()==save)){
-                System.out.println("save Customer");
                 createCustomer();
-                storeToDb();
+                writer();
+                System.out.println("save Customer"+" "+cs.toString());
             }
         }
     }
