@@ -57,7 +57,7 @@ public class JobViewer extends Viewer{
 
     private void addToTable(Job j){
         System.out.println("add to Table");
-        String[] item={Integer.toString(j.getId()),""+j.getBrand(),""+ j.getDescription(),""+j.getDiagnosis(),""+j.getNotes(),""+j.getNotes(),""+j.getStatus()};
+        String[] item={Integer.toString(j.getId()),""+j.getBrand(),""+ j.getDescription(),""+j.getDiagnosis(),""+j.getNotes(),""+j.getStatus(),""+j.getLocation()};
         tableMod.addRow(item); //from the model above, make it a new row        
     }
     

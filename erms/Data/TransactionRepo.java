@@ -15,7 +15,7 @@ public class TransactionRepo {
     private String transaction;
     
     public void addTransaction(Transaction transaction){
-        String sql = "INSERT INTO Transactions (id, date, cost, paid, balance) VALUES (?,?,?,?,?,)";
+        String sql = "INSERT INTO Transactions (id, date, cost, paid, balance) VALUES (?,?,?,?,?)";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt= conn.prepareStatement(sql)){
                 stmt.setInt(1, transaction.getId());
@@ -29,31 +29,42 @@ public class TransactionRepo {
             }
     }
  
-    private void getTransactionFromDb(int transactionId){
-        String sql = "SELECT t.date, t.cost, t.paid, t.balance, j.brand, j.description, j.diagnosis, c.name, c.email, c.number FROM Transactions t"+
-        "LEFT JOIN Job j ON j.id = t.job_id"+
-        "LEFT JOIN Customer c ON c.job_id = j.id"+
-        "WHERE t.id = ?";
+    private void getTransactionFromDb(int id){
+        String sql = "SELECT " +
+                 "Transactions.job_id, " +
+                 "Transactions.date, " +
+                 "Transactions.cost, " +
+                 "Transactions.paid, " +
+                 "Transactions.balance, " +
+                 "Job.brand, " +
+                 "Job.description, " +
+                 "Job.diagnosis, " +
+                 "Customer.name, " +
+                 "Customer.email, " +
+                 "Customer.number " +
+                 "FROM Transactions " +
+                 "JOIN Job ON Job.id = Transactions.job_id " +
+                 "JOIN Customer ON Customer.job_id = Transactions.job_id " +
+                 "WHERE Transactions.job_id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
                 while(rs.next()){
-                    transaction = rs.getString("date")+""+rs.getString("name")+" "+rs.getString("email")+rs.getString("number")+"\n"+
-                    rs.getString("brand")+"\n"+rs.getString("description")+"\n"+rs.getString("diagnosis")+"\n"+
-                    "Cost: "+rs.getFloat("Cost")+" Paid: "+rs.getFloat("paid")+" Balance: "+rs.getString("balance");
+                    transaction = ""+rs.getString("date")+"Cost: "+rs.getFloat("Cost")+" Paid: "+rs.getFloat("paid")+" Balance: "+rs.getString("balance")+rs.getString("name")+" "+rs.getString("email")+rs.getString("number")+"\n"+
+                    rs.getString("brand")+"\n"+rs.getString("description")+"\n"+rs.getString("diagnosis")+"\n";                    
                 }
         } catch (SQLException e) {
             e.printStackTrace();
-        }    
+        }          
     }    
 
     public void addTransactionToJob(int jobId, int transactionId){
-        String sql = "UPDATE Job SET transaction_id = ? WHERE id = ?";
+        String sql = "UPDATE Transactions SET job_id = ? WHERE id = ?";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt= conn.prepareStatement(sql)){
-                stmt.setInt(1, transactionId);
-                stmt.setInt(2, jobId);
+                stmt.setInt(1, jobId);
+                stmt.setInt(2, transactionId);
                 stmt.executeUpdate();
             } catch(SQLException e){
                 e.printStackTrace();

@@ -14,7 +14,6 @@ import Payment.StartPaymentProcessor;
 
 public class PaymentAdderFrame extends AdderFrame implements StartPaymentProcessor{
     private int jobId;
-    private PaymentService paymentService;
 
     public PaymentAdderFrame(int n, int jobId) {
         super(n);
@@ -57,6 +56,6 @@ public class PaymentAdderFrame extends AdderFrame implements StartPaymentProcess
     public void startPaymentProcess() {
         float cost = Float.parseFloat(txfds.get(0).getText());
         float amountPaid = Float.parseFloat(txfds.get(1).getText());
-        paymentService = new PaymentService(jobId, cost, amountPaid);
+        PaymentService paymentService = new PaymentService(jobId, cost, amountPaid);
     }
 }
