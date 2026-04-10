@@ -52,7 +52,7 @@ public class PaymentService implements PaymentProcessor {
                      "\n\t\t===========================96c MOLYNES ROAD (876-366-9211)=========================\n"+
                      "\n\n\tCUSTOMER NAME: "+cus.getName()+"\tNUMBER: "+cus.getNumber()+"\tEMAIL: "+cus.getEmail()+
                      "\n\n\tDEVICE:"+
-                     "\n\tBRAND/MODEL: "+job.getDevice().getBrand()+"\tDATE: "+ transaction.getDate().toString()+
+                     "\n\tBRAND/MODEL: "+job.getBrand()+"\t"+job.getDescription()+"\tDATE: "+ transaction.getDate().toString()+
                      "\n\n\tDEVICE ISSUE: "+job.getDiagnosis()+
                      "\n\n\tDEVICE LOCATION IN STORE: "+ job.getLocation()+
                      "\n\n\tCost: $"+job.getCost()+"\n\tAMOUNT PAID: $"+amountPaid+"\n\tBALANCE: $"+transaction.getBalance()+

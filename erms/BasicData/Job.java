@@ -5,16 +5,36 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Job{
     private int idC = 3000000;
     private int id;
-    private Device device;
+    private String brand;
+    private String description;
     private float cost;
+    private float amountPaid;
     private String location;
     private String diagnosis;
     private String status;
     private String notes;
+    
 
-    public Job(Device dev){
-        this.device = dev;
+    public Job(String brand, String description, String diagnosis, String notes, String status,
+            String location){
+        this.brand = brand;
+        this.description = description;
+        this.diagnosis = diagnosis;
+        this.notes = notes;
+        this.status = status;
+        this.location = location;
         this.id = calcId();
+    }
+
+    public Job(int id, String brand, String description, String diagnosis, String notes, String status,
+            String location) {
+        this.id = id;
+        this.brand = brand;
+        this.description = description;
+        this.diagnosis = diagnosis;
+        this.notes = notes;
+        this.status = status;
+        this.location = location;
     }
 
     private int calcId(){
@@ -26,9 +46,14 @@ public class Job{
     public int getId(){
         return this.id;
     }
-    public Device getDevice(){
-	    return device;
+    public String getBrand(){
+	    return brand;
     }
+
+    public String getDescription(){
+	    return description;
+    }
+
     public float getCost(){
     	return cost;
     }
@@ -44,10 +69,10 @@ public class Job{
     public String getNotes(){
 	    return notes;
     }
-
-    public void setDevice(Device device){
-        this.device = device;
+    public float getAmountPaid(){
+        return amountPaid;
     }
+
     public void setCost(float cost){
         this.cost= cost;
     }
@@ -62,5 +87,17 @@ public class Job{
     }
     public void setNotes(String note){
         this.notes+= note;
-    }    
+    }       
+
+    public void setAmountPaid(float amountPaid){
+        this.amountPaid = amountPaid;
+    }
+
+    public void setBrand(String brand){
+        this.brand=brand;
+    }
+
+    public void setDescription(String Description){
+        this.description += description;
+    }
 }

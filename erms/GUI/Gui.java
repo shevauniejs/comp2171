@@ -22,7 +22,6 @@ public class Gui extends JFrame implements GuiFuncProcessor{
     private JButton viewJob;
     private JButton generateReport;
 
-    private int JBFLD = 7;
     private int CSFLD = 3;
 
     //protected JLabel statLabel;
@@ -55,7 +54,6 @@ public class Gui extends JFrame implements GuiFuncProcessor{
         generateReport = new JButton("GENERATE Reports");
         generateReport.addActionListener(coreListener);
         
-        
         addCustomer.setPreferredSize(new Dimension(50,20));
         viewJob.setPreferredSize(new Dimension(50,20));
         generateReport.setPreferredSize(new Dimension(50,20));
@@ -84,10 +82,13 @@ public class Gui extends JFrame implements GuiFuncProcessor{
             }
             if(event.getSource()==viewCustomer){
                 System.out.println("View Customer");
+                rightPanel.removeAll();
                 viewCustomers();
             }  
             if(event.getSource()==viewJob){
                 System.out.println("View Job");
+                rightPanel.removeAll();
+                viewJobs();
             }            
             if(event.getSource()==generateReport){
                 System.out.println("Generate report");
@@ -105,45 +106,18 @@ public class Gui extends JFrame implements GuiFuncProcessor{
     public void viewCustomers(){
         String [] theads = {"ID", "Name","Email","Number"};
         CustomerViewer viewCs = new CustomerViewer(theads);
-        rightPanel.removeAll();
         scrollPane = new JScrollPane(viewCs.getTable());
         rightPanel.add(scrollPane);
         rightPanel.updateUI();
     }
     
-    public void addJobToCustomer() {
-        JobAdder addcs = new JobAdder(JBFLD);
-        addcs.setVisible(true);
-    }
-
-
-    public void updateContact() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateContact'");
-    }
-
-
+   
     public void viewJobs() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewJobs'");
-    }
-
-
-    public void updateStatus() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateStatus'");
-    }
-
-
-    public void updateLocation() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateLocation'");
-    }
-
-
-    public void addNote() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addNote'");
+        String [] theads = {"ID","Brand","Description","Diagnosis","Notes", "Status","Location"};
+        JobViewer viewJs = new JobViewer(theads);
+        scrollPane = new JScrollPane(viewJs.getTable());
+        rightPanel.add(scrollPane);
+        rightPanel.updateUI();
     }
 
 

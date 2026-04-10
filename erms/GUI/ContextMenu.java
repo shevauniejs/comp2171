@@ -1,5 +1,5 @@
 package GUI;
 
-public abstract class ContextMenu {
-    
+public interface ContextMenu {
+    public void loadMenuOptions();
 }
