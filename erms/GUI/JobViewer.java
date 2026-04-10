@@ -2,7 +2,6 @@ package GUI;
 
 import java.util.ArrayList;
 import javax.swing.JTable;
-
 import BasicData.Job;
 import Data.JobRepo;
 
@@ -49,7 +48,7 @@ public class JobViewer extends Viewer{
         ArrayList<Job> lsCus = jRepo.getJobs();
         tableMod.setRowCount(0);
         if (lsCus.size()>0){ //List size must be greater than 0
-            for(counter=0;counter<lsCus.size();counter++){            
+            for(counter=0;counter<lsCus.size();counter++){          
                 addToTable(lsCus.get(counter)); 
                 }
             }  

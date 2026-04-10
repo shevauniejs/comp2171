@@ -1,8 +1,9 @@
 {
     "java.project.sourcePaths": [
-        "."
+        ".",
+        "lib"
     ],
     "java.project.referencedLibraries": [
-        "lib/sqlite-jdbc-3.51.3.0.jar"
+        "/media/shevaunie/Shared File/FOLDERS/UWI/LEVEL 2s/2025-6 sem2/COMP2171/Project/comp2171/erms/lib/sqlite-jdbc-3.51.3.0.jar"
     ]
 }
