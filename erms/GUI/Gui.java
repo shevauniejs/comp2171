@@ -99,7 +99,7 @@ public class Gui extends JFrame implements GuiFuncProcessor{
 
     
     public void addCustomer() {
-        CustAdder addcs = new CustAdder(CSFLD);
+        CustAdderFrame addcs = new CustAdderFrame(CSFLD);
         addcs.setVisible(true);
     }
 

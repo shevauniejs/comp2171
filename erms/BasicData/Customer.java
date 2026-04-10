@@ -1,16 +1,14 @@
 package BasicData;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-public class Customer {
+public class Customer extends BasicData{
     private String name;
     private String email;
     private String number;
     private Job job;
-    private int idC = 1000000;
-    private int id;
+    private static int counterStarter = 1000000;
 
     public Customer(String _name, String _email, String _number){
+        super(counterStarter);
         this.name =_name;
         this.email = _email;
         this.number = _number;
@@ -22,16 +20,6 @@ public class Customer {
         this.email = _email;
         this.number = _number;
         this.id = _id;
-    }
-
-    private int calcId(){
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        int rand = random.nextInt(0+1, 10000);
-        return idC+ rand;
-    }
-
-    public int getId(){
-        return this.id;
     }
 
     public String getName(){

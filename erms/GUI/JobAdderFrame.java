@@ -13,15 +13,17 @@ import BasicData.CreateJob;
 import BasicData.Job;
 import Data.DataMv;
 import Data.JobRepo;
+import Payment.StartPaymentProcessor;
 /**
  * Shows in context menu when right clicked on customer in "view Customer"
  */
-public class JobAdder extends AdderFrame implements DataMv, CreateJob{
+public class JobAdderFrame extends AdderFrame implements DataMv, CreateJob, StartPaymentProcessor{
     private Job job;
     private JobRepo jRepo;
     private int customerId;
+    private int PAF = 2;
 
-    public JobAdder(int n, int csID) {
+    public JobAdderFrame(int n, int csID) {
             super(n);
             this.customerId = csID;
             this.setTitle("Add Job");
@@ -66,9 +68,7 @@ public class JobAdder extends AdderFrame implements DataMv, CreateJob{
             String notes = txfds.get(3).getText();
             String status = txfds.get(4).getText();
             String location = txfds.get(5).getText();           
-            int cost = Integer.parseInt(txfds.get(6).getText());
             job = new Job(brand, Description, diagnosis, notes, status, location);
-            job.setCost(cost);
         }
         
         @Override
@@ -85,11 +85,17 @@ public class JobAdder extends AdderFrame implements DataMv, CreateJob{
             if((event.getSource()==save)){
                 createJob();
                 writer();
-                //PaymentService payment = new PaymentService(job, )
-                //System.out.println("save Customer");
+                startPaymentProcess();
+                System.out.println("save Customer, starting payment processor");
             }
         }
     }
+
+        @Override
+        public void startPaymentProcess() {
+            PaymentAdderFrame paymentFrame = new PaymentAdderFrame(PAF,job.getId());
+            paymentFrame.setVisible(true);
+        }
 
 }
 

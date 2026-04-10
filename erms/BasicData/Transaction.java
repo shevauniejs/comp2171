@@ -1,41 +1,55 @@
 package BasicData;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-public class Transaction {
-    private LocalDateTime date;
-    private int transactionId;
-    private double amountPaid;
-    private double balance;
+public class Transaction extends BasicData{
+    private  static int counterStart = 40000000;
+    private LocalDate date;
+    private float amountPaid;
+    private float jobCost;
+    private float balance;
 
-    public Transaction(Job job){
-        date = LocalDateTime.now();
-        this.balance = job.getCost()-amountPaid;
-    }
- 
-    public int getTransId(){
-        return transactionId;
-    }
-    
-    public void setTransId(int t_id){
-        transactionId = t_id;
+    public Transaction(float jobCost, float amountPaid){
+        super(counterStart);
+        date = LocalDate.now();
+        this.jobCost = jobCost;
+        this.amountPaid = amountPaid;
     }
 
-    public double getPaid(){
-        return this.amountPaid;
-    }
-    public void setPaid(double paid){
-        this.amountPaid = paid;
-    }
-
-    public void setBalance(double balance){
+    public Transaction(int id, LocalDate date, float amountPaid, float cost, float balance){
+        this.date = date;
+        this.amountPaid = amountPaid;
+        this.jobCost = cost;
+        this.amountPaid = amountPaid;
         this.balance = balance;
     }
 
-    public double getBalance(){
+    public float getCost(){
+        return this.jobCost;
+    }
+    public void setCost(float paid){
+        this.amountPaid = paid;
+    }
+
+    public float getPaid(){
+        return this.amountPaid;
+    }
+    public void setPaid(float paid){
+        this.amountPaid = paid;
+    }
+
+    public void setBalance(float balance){
+        this.balance = balance;
+    }
+
+    public float getBalance(){
         return this.balance;
     }
-    public LocalDateTime getDate(){
+    public LocalDate getDate(){
         return date;
+    }
+
+    public void setDate(){
+        date = LocalDate.now();
     }
 }

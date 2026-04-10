@@ -3,23 +3,40 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.ThreadLocalRandom;
 
-import BasicData.Customer;
-import BasicData.Job;
+import BasicData.CreateTransaction;
 import BasicData.Transaction;
+import Data.DataMv;
+import Data.TransactionRepo;
 
-public class PaymentService implements PaymentProcessor {
+public class PaymentService implements PaymentProcessor, DataMv, CreateTransaction {
     private Transaction transaction;
-    static int idCounter = 400000000;
+    private TransactionRepo transRepo;
+    private int jobId;
+    private float cost, amountPaid;
 
-    public PaymentService(Job job, Customer cus, double amountPaid){
-        createPayment(job, cus, amountPaid);        
+    public PaymentService(int jobId, float cost, float amountPaid){
+        this.jobId = jobId;
+        transRepo = new TransactionRepo();
+        createTransaction();
+        calcBalance();
+        writer();
+
+
+        generateReceipt(transaction.getId(), "\t\t===========================BWOYZE+++ELECTRONICS=======================\n"+
+                     "\n\t\t===========================96c MOLYNES ROAD (876-366-9211)=========================\n"+
+                     transRepo.getTransaction(jobId)+
+                     "\n\n\tTRANSACTION: "+transaction.getId()+
+                     "\n\n\tDevices are held for a maximum of 30 days after technician notifies/calls you.\n"+
+                     "\tFailure to retrieve after 30 days will incur a storage fee or device being sold."+
+                     "\n\n\t\t\tThanks for doing business!");
     }
 
-    public void calcBalance(Job job, float amountPaid) {
-        transaction.setBalance(job.getCost()-amountPaid);
+    public void calcBalance() {
+        float balance = cost-amountPaid;
+        transaction.setBalance(balance);
     }
+
     public void generateReceipt(int _transID, String _details){
         System.out.println("Generating receipt...");
         String userhome = System.getProperty("user.home");
@@ -38,27 +55,15 @@ public class PaymentService implements PaymentProcessor {
         }
     }
 
-
-    private int calcId(){
-        ThreadLocalRandom random =ThreadLocalRandom.current();
-        int rand = random.nextInt(0+1,10000);
-        return idCounter+rand;
+    @Override   
+    public void writer() {
+        transRepo.addTransaction(transaction);
+        transRepo.addTransactionToJob(jobId, transaction.getId());
+        System.out.println("Transaction Complete, ");
     }
 
-    public void createPayment(Job job, Customer cus, double amountPaid) {
-        transaction = new Transaction(job);
-        transaction.setTransId(calcId());
-        generateReceipt(transaction.getTransId(), "\t\t===========================BWOYZE+++ELECTRONICS=======================\n"+
-                     "\n\t\t===========================96c MOLYNES ROAD (876-366-9211)=========================\n"+
-                     "\n\n\tCUSTOMER NAME: "+cus.getName()+"\tNUMBER: "+cus.getNumber()+"\tEMAIL: "+cus.getEmail()+
-                     "\n\n\tDEVICE:"+
-                     "\n\tBRAND/MODEL: "+job.getBrand()+"\t"+job.getDescription()+"\tDATE: "+ transaction.getDate().toString()+
-                     "\n\n\tDEVICE ISSUE: "+job.getDiagnosis()+
-                     "\n\n\tDEVICE LOCATION IN STORE: "+ job.getLocation()+
-                     "\n\n\tCost: $"+job.getCost()+"\n\tAMOUNT PAID: $"+amountPaid+"\n\tBALANCE: $"+transaction.getBalance()+
-                     "\n\n\tTRANSACTION: "+transaction.getTransId()+
-                     "\n\n\tDevices are held for a maximum of 30 days after technician notifies/calls you.\n"+
-                     "\tFailure to retrieve after 30 days will incur a storage fee or device being sold."+
-                     "\n\n\t\t\tThanks for doing business!");
-    }    
+    @Override
+    public void createTransaction() {
+        transaction = new Transaction(cost, amountPaid);
+    }
 }

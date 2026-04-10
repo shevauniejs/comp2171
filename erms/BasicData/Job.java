@@ -1,13 +1,9 @@
 package BasicData;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-public class Job{
-    private int idC = 3000000;
-    private int id;
+public class Job extends BasicData{
+    private static int counterStart = 3000000;
     private String brand;
     private String description;
-    private float cost;
     private float amountPaid;
     private String location;
     private String diagnosis;
@@ -17,6 +13,7 @@ public class Job{
 
     public Job(String brand, String description, String diagnosis, String notes, String status,
             String location){
+        super(counterStart);
         this.brand = brand;
         this.description = description;
         this.diagnosis = diagnosis;
@@ -36,16 +33,7 @@ public class Job{
         this.status = status;
         this.location = location;
     }
-
-    private int calcId(){
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        int rand = random.nextInt(0+1, 10000);
-        return idC+ rand;
-    }
-
-    public int getId(){
-        return this.id;
-    }
+    
     public String getBrand(){
 	    return brand;
     }
@@ -54,9 +42,6 @@ public class Job{
 	    return description;
     }
 
-    public float getCost(){
-    	return cost;
-    }
     public String getLocation(){
         return location;
     }
@@ -73,9 +58,6 @@ public class Job{
         return amountPaid;
     }
 
-    public void setCost(float cost){
-        this.cost= cost;
-    }
     public void setLocation(String location){
         this.location= location;
     }

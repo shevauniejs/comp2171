@@ -14,10 +14,10 @@ import BasicData.Customer;
 import Data.CustomerRepo;
 import Data.DataMv;
 
-public class CustAdder extends AdderFrame implements DataMv, CreateCustomer{
+public class CustAdderFrame extends AdderFrame implements DataMv, CreateCustomer{
     private Customer cs;
 
-    public CustAdder(int n) {
+    public CustAdderFrame(int n) {
         super(n);
         this.setTitle("Add Customer");
         this.setBounds(200, 100, 320,240);
