@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 import BasicData.Customer;
 
-public  class CustomerRepo {
-    private static ArrayList<Customer> customers = new ArrayList<Customer>();
+public  class CustomerRepo{
+    
+    private ArrayList<Customer> customers = new ArrayList<Customer>();
     private static Customer customer;
 
     public CustomerRepo(){};

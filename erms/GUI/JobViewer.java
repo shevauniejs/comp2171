@@ -1,15 +1,20 @@
 package GUI;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
+import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import BasicData.Job;
 import Data.JobRepo;
 
-public class JobViewer extends Viewer{
+public class JobViewer extends Viewer implements ContextMenu, TableFuncProcessor{
     private JobRepo jRepo;
+    private JMenuItem updateStatus, updateNote;
     public JobViewer(String[] heads) {
         super(heads);
-         jRepo = new JobRepo();
+        jRepo = new JobRepo();
         generateTable();
         //TODO Auto-generated constructor stub
     }
@@ -19,9 +24,9 @@ public class JobViewer extends Viewer{
 
         System.out.println("Generate table");
         table = new JTable(tableMod);     
-        //loadMenuOptions();
+        loadMenuOptions();
 
-        /*table.addMouseListener(new MouseAdapter() {
+        table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 showPopup(e);
             }
@@ -36,7 +41,6 @@ public class JobViewer extends Viewer{
                 }
             }
         });
-        */
         showTable();
     }
 
@@ -46,6 +50,7 @@ public class JobViewer extends Viewer{
         
         int counter;
         ArrayList<Job> lsCus = jRepo.getJobs();
+        System.out.println("List size"+lsCus.size());
         tableMod.setRowCount(0);
         if (lsCus.size()>0){ //List size must be greater than 0
             for(counter=0;counter<lsCus.size();counter++){          
@@ -58,6 +63,26 @@ public class JobViewer extends Viewer{
         System.out.println("add to Table");
         String[] item={Integer.toString(j.getId()),""+j.getBrand(),""+ j.getDescription(),""+j.getDiagnosis(),""+j.getNotes(),""+j.getStatus(),""+j.getLocation()};
         tableMod.addRow(item); //from the model above, make it a new row        
+    }
+
+    @Override
+    public void loadMenuOptions() {
+        updateStatus = new JMenuItem("Update Status");
+        updateNote = new JMenuItem("Update Note");
+        popupMenu.add(updateStatus);
+        popupMenu.add(updateNote);
+    }
+
+    @Override
+    public void updateStatus() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateStatus'");
+    }
+
+    @Override
+    public void addNote() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addNote'");
     }
     
 }

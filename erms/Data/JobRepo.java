@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import BasicData.Job;
 
 public class JobRepo {
-    private static ArrayList<Job> jobs = new ArrayList<Job>();
+    private ArrayList<Job> jobs = new ArrayList<Job>();
     
     public void addJob(Job job){
         String sql = "INSERT INTO Job (id, brand, description, diagnosis, notes, status, location) VALUES (?,?,?,?,?,?,?)";

@@ -18,6 +18,7 @@ public class CustomerViewer extends Viewer implements ContextMenu {
     private int JBFLD = 6;
     public CustomerViewer(String[] heads) {
         super(heads);
+        tableMod.setNumRows(0);
         generateTable();
     }
 
